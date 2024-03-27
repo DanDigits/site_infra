@@ -1,0 +1,45 @@
+# Unfinished, heck unstarted, but this flow is to instantiate the hosted zone for the
+# cloudfront/s3 infra. Working .tf file is literally just the route53 file in the respective
+# module in the codebase, just need to get to finishing this up
+on:
+  workflow_call:
+    secrets:
+      aws_access_key_id:
+        required: true
+      aws_secret_access_key:
+        required: true
+      state_file:
+        required: true
+
+name: "Create cloudfront distribution and s3 buckets"
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+      STATE_FILE: ${{ secrets.state_file }}
+    defaults:
+      run:
+        working-directory: main
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.5.7
+        terraform_wrapper: false
+    - name: Insert remote backend file
+      run: echo ${{ secrets.state_file }} >> main/state.tfvars
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check
+    - name: Terraform Init
+      id: init
+      run: terraform init -reconfigure -backend-config="state.tfvars"
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -var-file="variables.tfvars"
+    - name: Terraform Apply
+      run: terraform apply --auto-approve

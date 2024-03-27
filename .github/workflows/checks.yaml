@@ -1,0 +1,41 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+name: Terraform checks
+jobs:
+  Document:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out the codebase
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+    - name: Create terraform docs in README
+      uses: terraform-docs/gh-actions@v1.0.0
+      with:
+        working-dir: .
+        output-file: README.md
+        output-method: inject
+        git-push: "true"
+  Terrascan:
+    runs-on: ubuntu-latest
+    needs: Document
+    steps:
+    - name: Check out the codebase
+      uses: actions/checkout@v4
+    - name: Terrascan
+      uses: tenable/terrascan-action@main
+      with:
+        iac-type: 'terraform'
+        iac-dir: .
+        policy-type: 'aws'
+        non_recursive: false
+        verbose: true
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: terrascan.sarif
