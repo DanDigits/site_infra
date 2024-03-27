@@ -34,7 +34,7 @@ jobs:
         iac_dir: ./
         iac_version: 'v14'
         policy_type: 'aws'
-        # non_recursive: false
+        non_recursive: true
         verbose: true
         sarif_upload: true
     - name: Upload SARIF file
