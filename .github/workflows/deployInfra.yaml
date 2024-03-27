@@ -12,7 +12,7 @@ on:
       remote_state_table:
         required: true
 
-name: "Create cloudfront distribution and s3 buckets"
+name: "Cloudfront dist. and S3 buckets"
 jobs:
   Deploy:
     runs-on: ubuntu-latest

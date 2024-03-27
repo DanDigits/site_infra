@@ -11,7 +11,7 @@ on:
       state_file:
         required: true
 
-name: "Create cloudfront distribution and s3 buckets"
+name: "Route 53 hosted zone"
 jobs:
   Deploy:
     runs-on: ubuntu-latest
