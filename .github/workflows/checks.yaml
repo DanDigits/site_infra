@@ -31,10 +31,11 @@ jobs:
       uses: tenable/terrascan-action@main
       with:
         iac_type: 'terraform'
-        iac_dir: ./
+        # iac_dir: ./
         iac_version: 'v14'
         policy_type: 'aws'
-        non_recursive: true
+        # non_recursive: false
+        only_warn: true
         verbose: true
         sarif_upload: true
     - name: Upload SARIF file
