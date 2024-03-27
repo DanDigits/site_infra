@@ -33,7 +33,7 @@ jobs:
         iac_type: 'terraform'
         iac_version: 'v14'
         policy_type: 'aws'
-        non_recursive: false
+        # non_recursive: false
         verbose: true
         sarif_upload: true
     - name: Upload SARIF file
