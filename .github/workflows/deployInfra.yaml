@@ -14,7 +14,7 @@ on:
 
 name: "Cloudfront dist. and S3 buckets"
 jobs:
-  Deploy:
+  deploy:
     runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
