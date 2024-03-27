@@ -19,11 +19,11 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-    defaults:
-      run:
-        working-directory: main
+    # defaults:
+    #   run:
+    #     working-directory: main
     steps:
-    - name: Checkout
+    - name: Check out the codebase
       uses: actions/checkout@v4
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
