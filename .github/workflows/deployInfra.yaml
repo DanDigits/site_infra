@@ -30,8 +30,6 @@ jobs:
       with:
         terraform_version: 1.5.7
         terraform_wrapper: false
-    - name: Insert remote backend file
-      run: echo ${{ secrets.state_file }} >> main/state.tfvars
     - name: Create remote state file
       run: |
         echo "bucket = \"${{ secrets.remote_state_bucket }}\"" >> main/state.tfvars
