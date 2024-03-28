@@ -21,7 +21,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
     defaults:
       run:
-        working-directory: .
+        working-directory: main
     steps:
     - name: Check out the codebase
       uses: actions/checkout@v4
@@ -32,11 +32,11 @@ jobs:
         terraform_wrapper: false
     - name: Create remote state file
       run: |
-        echo "bucket = \"${{ secrets.remote_state_bucket }}\"" >> main/state.tfvars
-        echo "key = \"${{ secrets.remote_state_key }}\"" >> main/state.tfvars
-        echo "region = \"us-east-1\"" >> main/state.tfvars
-        echo "dynamodb_table = \"${{ secrets.remote_state_table }}\"" >> main/state.tfvars
-        echo "encrypt = true" >> main/state.tfvars
+        echo "bucket = \"${{ secrets.remote_state_bucket }}\"" >> state.tfvars
+        echo "key = \"${{ secrets.remote_state_key }}\"" >> state.tfvars
+        echo "region = \"us-east-1\"" >> state.tfvars
+        echo "dynamodb_table = \"${{ secrets.remote_state_table }}\"" >> state.tfvars
+        echo "encrypt = true" >> state.tfvars
     - name: Terraform Format
       id: fmt
       run: terraform fmt -check
